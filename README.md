@@ -448,14 +448,18 @@ See [`model_card.md`](model_card.md) for the full bias analysis.
 
 ## Reflection
 
-Read and complete `model_card.md`:
+Read the full [**Model Card**](model_card.md) for intended use, data, bias analysis, pair-by-pair
+profile comparisons, and a personal reflection.
 
-[**Model Card**](model_card.md)
+**How recommenders turn data into predictions.** A recommender doesn't "understand" music; it turns a
+song into a handful of numbers and labels (features), turns a person into target values for those same
+features, and then measures how close they are. The prediction "you'll like this" is really "this song
+scored highest on rules someone chose." Splitting the work into a *scoring rule* (judge one song) and a
+*ranking rule* (sort them all) made that clear — and it showed me that most of the "intelligence" is in
+the weights, which are design decisions, not facts.
 
-Write 1 to 2 paragraphs here about what you learned:
-
-- about how recommenders turn data into predictions
-- about where bias or unfairness could show up in systems like this
-
-
-
+**Where bias shows up.** Bias crept in from two places I didn't expect to matter: the weights and the
+dataset. Making genre worth twice as much as mood meant a loud workout track (*Gym Hero*) kept showing up
+for people who asked for happy music, just because of its "pop" tag. And because lofi has three songs
+while rock, metal, and folk have one each, lofi fans get better lists than everyone else through no
+choice of their own. At real-world scale, the same effects would decide which artists get heard.
