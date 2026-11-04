@@ -458,8 +458,3 @@ scored highest on rules someone chose." Splitting the work into a *scoring rule*
 *ranking rule* (sort them all) made that clear — and it showed me that most of the "intelligence" is in
 the weights, which are design decisions, not facts.
 
-**Where bias shows up.** Bias crept in from two places I didn't expect to matter: the weights and the
-dataset. Making genre worth twice as much as mood meant a loud workout track (*Gym Hero*) kept showing up
-for people who asked for happy music, just because of its "pop" tag. And because lofi has three songs
-while rock, metal, and folk have one each, lofi fans get better lists than everyone else through no
-choice of their own. At real-world scale, the same effects would decide which artists get heard.
