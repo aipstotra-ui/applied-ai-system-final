@@ -13,3 +13,6 @@ venv/
 
 # Pytest cache
 .pytest_cache/
+
+# Agent logs (a sample run is committed under docs/)
+logs/
