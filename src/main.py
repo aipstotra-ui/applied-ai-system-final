@@ -6,6 +6,8 @@ Usage (from the repo root):
     python -m src.main --profile pop                # one profile
     python -m src.main --weights energy-heavy       # run an experiment
     python -m src.main --profile rock -k 3
+    python -m src.main --ask "something to study to"          # AI agent: RAG + self-check
+    python -m src.main --ask "gym, energy 0.9" --trace        # also print the agent's reasoning steps
 """
 
 import argparse
@@ -49,14 +51,48 @@ def print_recommendations(name: str, prefs: Dict, recs: List[Tuple[Dict, float, 
     print()
 
 
+def run_agent(query: str, k: int, show_trace: bool) -> None:
+    """Answer one natural-language request with the RAG agent and print the result."""
+    from src.agent import VibeFinderAgent, setup_logging
+
+    setup_logging()
+    result = VibeFinderAgent().ask(query, k=k)
+    print("=" * 72)
+    print(f"Request:    {result.query!r}")
+    print(f"Status:     {result.status}   confidence={result.confidence:.2f}   verified={result.verified}")
+    if result.message:
+        print(f"Message:    {result.message}")
+    if result.sources:
+        print("Retrieved:  " + "; ".join(f"{title} ({sim:.2f})" for title, sim in result.sources))
+    if result.profile:
+        print("Profile:    " + describe(result.profile))
+    print("-" * 72)
+    for rank, (song, score, explanation) in enumerate(result.recommendations, start=1):
+        print(f"{rank}. {song['title']} - {song['artist']}  ({song['genre']}, {song['mood']})  score {score:.2f}")
+        for reason in explanation.split("; "):
+            print(f"     • {reason}")
+    if show_trace:
+        print("-" * 72)
+        print("Agent trace:")
+        for step in result.trace:
+            print(f"  {step}")
+    print()
+
+
 def main(argv: Optional[List[str]] = None) -> None:
     """Load the catalog and print top-k recommendations for the chosen profile(s)."""
     parser = argparse.ArgumentParser(description="VibeFinder music recommender simulation")
     parser.add_argument("--profile", choices=sorted(PROFILES), help="run a single profile (default: all)")
     parser.add_argument("--weights", choices=sorted(EXPERIMENT_WEIGHTS), default="default",
                         help="weight set to use (experiments)")
+    parser.add_argument("--ask", metavar="TEXT", help="natural-language request answered by the RAG agent")
+    parser.add_argument("--trace", action="store_true", help="with --ask: print the agent's reasoning trace")
     parser.add_argument("-k", type=int, default=5, help="number of recommendations to show")
     args = parser.parse_args(argv)
+
+    if args.ask is not None:
+        run_agent(args.ask, args.k if args.k != 5 else 3, args.trace)
+        return
 
     songs = load_songs(str(DATA_PATH))
     print(f"Loaded songs: {len(songs)}\n")
