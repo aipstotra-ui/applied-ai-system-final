@@ -1,0 +1,28 @@
+========================================================================
+Request:    'jazz for a rainy day, energy 0.3'
+Status:     ok   confidence=0.82   verified=True
+Retrieved:  Rainy day (0.30); Jazz (0.20)
+Profile:    genre=jazz, mood=relaxed, energy=0.3, likes_acoustic=True
+------------------------------------------------------------------------
+1. Coffee Shop Stories - Slow Stereo  (jazz, relaxed)  score 4.85
+     • genre match: jazz (+2.00)
+     • mood match: relaxed (+1.00)
+     • energy 0.37 vs target 0.30 (+1.40)
+     • acoustic sound fit 0.89 (+0.45)
+2. Island Sway - Kaya Roots  (reggae, relaxed)  score 2.37
+     • mood match: relaxed (+1.00)
+     • energy 0.52 vs target 0.30 (+1.17)
+     • acoustic sound fit 0.40 (+0.20)
+3. Spacewalk Thoughts - Orbit Bloom  (ambient, chill)  score 1.93
+     • energy 0.28 vs target 0.30 (+1.47)
+     • acoustic sound fit 0.92 (+0.46)
+------------------------------------------------------------------------
+Agent trace:
+  1. GUARDRAIL input accepted
+  2. PLAN explicit terms: genres=['jazz'] moods=[] energy=0.3
+  3. RETRIEVE Rainy day (0.30), Jazz (0.20)
+  4. PROFILE genre=jazz, mood=relaxed, energy=0.3, likes_acoustic=True
+  5. RECOMMEND top='Coffee Shop Stories' score=4.85
+  6. VERIFY passed
+  8. ANSWER confidence 0.82
+

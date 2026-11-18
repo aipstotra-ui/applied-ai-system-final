@@ -1,0 +1,21 @@
+flowchart TD
+    U(["User request: something to study to"]) --> G{"Guardrails<br/>validate_query"}
+    G -- "empty, too long, or injection" --> R[/"Rejected with reason"/]
+    G -- ok --> P["Agent plan<br/>extract explicit genre, mood, energy"]
+    P --> RET["Retriever<br/>TF-IDF over knowledge base"]
+    KB[("data/knowledge<br/>activities, moods, genres")] --> RET
+    RET -- "no hits and no explicit terms" --> H1[/"Human-in-the-loop:<br/>ask user to rephrase"/]
+    RET -- "top-3 chunks + similarity" --> PB["Profile builder<br/>similarity-weighted votes"]
+    PB --> SC["VibeFinder scorer<br/>recommend_songs"]
+    CAT[("data/songs.csv<br/>20 songs")] --> SC
+    SC --> V{"Verifier<br/>genre or mood fits?<br/>energy gap small?<br/>score high enough?"}
+    V -- fail --> REV["Revise once<br/>runner-up genre, drop acoustic"]
+    REV --> SC
+    V -- pass --> C["Confidence score<br/>retrieval sim + score + conflict check"]
+    C -- "below 0.55" --> H2[/"Human-in-the-loop:<br/>ask user to clarify"/]
+    C -- "0.55 or above" --> OUT[/"Top-k songs + reasons<br/>+ retrieved sources"/]
+    G -.-> LOG[("logs/agent.log")]
+    C -.-> LOG
+    T[["pytest suite + scripts/evaluate.py<br/>15 cases + retrieval ablation"]] -.checks.-> G
+    T -.checks.-> V
+    T -.checks.-> C

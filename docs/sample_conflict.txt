@@ -1,0 +1,29 @@
+========================================================================
+Request:    'calm but also aggressive and loud'
+Status:     low_confidence   confidence=0.48   verified=True
+Message:    I'm only 48% sure about this. Please add a genre, mood or activity so I can do better. Best guess below.
+Retrieved:  Venting anger (0.22); Angry and aggressive (0.18); Sleep and winding down (0.14)
+Profile:    genre=metal, mood=angry, energy=0.75, likes_acoustic=False
+------------------------------------------------------------------------
+1. Iron Cathedral - Graveforge  (metal, angry)  score 4.65
+     • genre match: metal (+2.00)
+     • mood match: angry (+1.00)
+     • energy 0.97 vs target 0.75 (+1.17)
+     • produced/electronic sound fit 0.97 (+0.48)
+2. Concrete Crown - Blocktalk  (hip hop, confident)  score 1.90
+     • energy 0.78 vs target 0.75 (+1.46)
+     • produced/electronic sound fit 0.88 (+0.44)
+3. Night Drive Loop - Neon Echo  (synthwave, moody)  score 1.89
+     • energy 0.75 vs target 0.75 (+1.50)
+     • produced/electronic sound fit 0.78 (+0.39)
+------------------------------------------------------------------------
+Agent trace:
+  1. GUARDRAIL input accepted
+  2. PLAN explicit terms: genres=[] moods=[] energy=None
+  3. RETRIEVE Venting anger (0.22), Angry and aggressive (0.18), Sleep and winding down (0.14)
+  4. PROFILE genre=metal, mood=angry, energy=0.75, likes_acoustic=False
+  5. RECOMMEND top='Iron Cathedral' score=4.65
+  6. VERIFY passed
+  7b. CONFLICT retrieved entries disagree on energy (0.20-0.95); lowering confidence
+  8. HUMAN-IN-THE-LOOP confidence 0.48 < 0.55; asking for clarification
+

@@ -1,0 +1,29 @@
+========================================================================
+Request:    'I need something to study to'
+Status:     ok   confidence=0.90   verified=True
+Retrieved:  Studying and deep focus (0.40)
+Profile:    genre=lofi, mood=focused, energy=0.35, likes_acoustic=True
+------------------------------------------------------------------------
+1. Focus Flow - LoRoom  (lofi, focused)  score 4.81
+     • genre match: lofi (+2.00)
+     • mood match: focused (+1.00)
+     • energy 0.40 vs target 0.35 (+1.42)
+     • acoustic sound fit 0.78 (+0.39)
+2. Library Rain - Paper Lanterns  (lofi, chill)  score 3.93
+     • genre match: lofi (+2.00)
+     • energy 0.35 vs target 0.35 (+1.50)
+     • acoustic sound fit 0.86 (+0.43)
+3. Midnight Coding - LoRoom  (lofi, chill)  score 3.75
+     • genre match: lofi (+2.00)
+     • energy 0.42 vs target 0.35 (+1.40)
+     • acoustic sound fit 0.71 (+0.35)
+------------------------------------------------------------------------
+Agent trace:
+  1. GUARDRAIL input accepted
+  2. PLAN explicit terms: genres=[] moods=[] energy=None
+  3. RETRIEVE Studying and deep focus (0.40)
+  4. PROFILE genre=lofi, mood=focused, energy=0.35, likes_acoustic=True
+  5. RECOMMEND top='Focus Flow' score=4.81
+  6. VERIFY passed
+  8. ANSWER confidence 0.90
+
